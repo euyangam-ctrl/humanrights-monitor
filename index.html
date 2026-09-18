@@ -44,6 +44,9 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:14p
   box-shadow:0 4px 12px -4px color-mix(in srgb,var(--s1) 60%,transparent)}
 h1{font-size:clamp(16px,2.2vw,20px);line-height:1.2;margin:0;letter-spacing:-.015em;font-weight:640}
 .sub{color:var(--text-muted);font-size:12px;margin:1px 0 0}
+.hright{display:flex;align-items:center;gap:10px;flex:none}
+.updated{font-size:11.5px;color:var(--text-muted);white-space:nowrap}
+.updated b{color:var(--text-secondary);font-weight:600;font-variant-numeric:tabular-nums}
 .themebtn{background:var(--surface-1);border:1px solid var(--border);color:var(--text-secondary);
   border-radius:10px;padding:7px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;flex:none;
   box-shadow:var(--shadow);transition:.15s}
@@ -183,7 +186,6 @@ a.plus{padding:3px 7px;font-variant-numeric:tabular-nums}
   cursor:pointer;font-family:inherit;min-height:42px;transition:.15s;font-weight:500}
 .loadmore:hover{background:var(--surface-3)}
 .empty{text-align:center;padding:26px 12px;color:var(--text-muted);font-size:13px}
-footer{margin-top:14px;font-size:11.5px;color:var(--text-muted);line-height:1.6}
 @media print{.filters,.themebtn,.loadmore,.seg{display:none}}
 </style>
 </head>
@@ -199,7 +201,10 @@ footer{margin-top:14px;font-size:11.5px;color:var(--text-muted);line-height:1.6}
       <p class="sub">7 хоног бүрийн мониторингийн нэгдсэн бүртгэл</p>
     </div>
   </div>
-  <button class="themebtn" id="themebtn" type="button">◐ Загвар</button>
+  <div class="hright">
+    <span class="updated" id="updated"></span>
+    <button class="themebtn" id="themebtn" type="button">◐ Загвар</button>
+  </div>
 </header>
 
 <section class="filters">
@@ -272,10 +277,6 @@ footer{margin-top:14px;font-size:11.5px;color:var(--text-muted);line-height:1.6}
   <div id="records"></div>
 </section>
 
-<footer>
-  Эх сурвалж: «Хүний эрхийн зөрчлийн мэдээлэл.2026.xlsx» — Дотоод / Гадаад хуудас. Эрхийн ангилал (Дотоод O, Гадаад N) ба нийгмийн бүлэг (Дотоод R, Гадаад Q) багануудыг шууд уншсан. Холбоосыг нүдэнд суулгасан гипер холбоос болон текстээс давхар уншиж, давхардлыг цэвэрлэсэн.
-  <span id="skipnote"></span>
-</footer>
 
 </div>
 <div class="tip" id="tip"></div>
@@ -587,8 +588,7 @@ function render(){
 
 /* ---------- init ---------- */
 (function init(){
-  if(META.skipped) $('#skipnote').textContent =
-    ' «Хөндөгдсөн эрх» багана хоосон ' + META.skipped + ' мөрийг ажлын дэвтрийн Дашбоард хуудастай адилаар тооноос хассан.';
+  $('#updated').innerHTML = 'Шинэчилсэн: <b>' + esc(META.generated) + '</b>';
 
   const fill = (sel, items) => { const s=$(sel);
     items.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);}); };
